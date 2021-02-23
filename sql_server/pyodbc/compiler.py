@@ -304,6 +304,9 @@ class SQLCompiler(compiler.SQLCompiler):
                     params.extend(o_params)
                 result.append('ORDER BY %s' % ', '.join(ordering))
 
+                if not (do_offset or do_limit):
+                    result.append("OFFSET 0 ROWS")
+
             # SQL Server requires the backend-specific emulation (2008 or earlier)
             # or an offset clause (2012 or newer) for offsetting
             if do_offset:
